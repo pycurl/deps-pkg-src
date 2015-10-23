@@ -1,0 +1,5 @@
+curl-7-19-0 (7.19.0-1) UNRELEASED; urgency=medium
+
+  * Initial release.
+
+ -- Oleg Pudeyev <oleg@bsdpower.com>  Thu, 22 Oct 2015 20:23:35 -0400
