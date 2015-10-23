@@ -1,9 +1,9 @@
 #!/usr/bin/make -f
 
 %:
-        dh $@
+	dh $@
 
 # http://askubuntu.com/questions/157295/correctly-packaging-for-opt-with-dh-make
 
 override_dh_auto_configure:
-    dh_auto_configure -- --prefix=/opt/curl-7-19-0
+	dh_auto_configure -- --prefix=/opt/curl-7.19.0
