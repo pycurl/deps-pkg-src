@@ -5,3 +5,5 @@ Docs:
 - https://packages.debian.org/sid/pbuilder
 
 http://askubuntu.com/questions/157295/correctly-packaging-for-opt-with-dh-make
+
+http://iomem.com/archives/18-Avoiding-tests-when-building-Debian-packages.html
