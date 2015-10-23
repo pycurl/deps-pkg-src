@@ -1,0 +1,18 @@
+#!/bin/sh
+
+wget_once() {
+  url="$1"
+  if ! test -f `basename "$url"`; then
+    wget -O `basename "$url"`.part "$url"
+    rv=$?
+    if test $rv = 0; then
+      mv `basename "$url"`.part `basename "$url"`
+    else
+      rm -f `basename "$url"`.part
+      return $rv
+    fi
+  fi
+}
+
+wget_once http://curl.haxx.se/download/archeology/curl-7.19.0.tar.gz
+
