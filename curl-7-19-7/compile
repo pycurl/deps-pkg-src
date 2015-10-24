@@ -1,0 +1,66 @@
+#!/bin/sh
+
+set -ex
+
+wget_once() {
+  url="$1"
+  if ! test -f `basename "$url"`; then
+    wget -O `basename "$url"`.part "$url"
+    rv=$?
+    if test $rv = 0; then
+      mv `basename "$url"`.part `basename "$url"`
+    else
+      rm -f `basename "$url"`.part
+      return $rv
+    fi
+  fi
+}
+
+wget_once_to() {
+  url="$1"
+  dest="$2"
+  if ! test -f "$dest"; then
+    wget -O "$dest".part "$url"
+    rv=$?
+    if test $rv = 0; then
+      mv "$dest".part "$dest"
+    else
+      rm -f "$dest".part
+      return $rv
+    fi
+  fi
+}
+
+openssl_version=1.0.1e
+curl_version=7.19.7
+
+rm -rf build
+mkdir build
+cd build
+(cd .. && wget_once http://www.openssl.org/source/old/1.0.1/openssl-$openssl_version.tar.gz)
+
+tar xfz ../openssl-$openssl_version.tar.gz
+cd openssl-$openssl_version
+./config --prefix=/home/ubuntu/opt/openssl-$openssl_version --shared
+make
+sudo make install
+
+cd ..
+
+(cd .. && wget_once http://curl.haxx.se/download/archeology/curl-$curl_version.tar.gz)
+
+sudo apt-get install libssl-dev libkrb5-dev
+
+tar xfz ../curl-$curl_version.tar.gz
+cd curl-$curl_version
+./configure --help
+./configure --prefix=/home/ubuntu/opt/curl-$curl_version-gssapi \
+  --without-gnults --without-nss --with-gssapi \
+  --with-ssl=/home/ubuntu/opt/openssl-$openssl_version
+make
+# building in vagrant, installing to /home/ubuntu
+sudo make install
+
+cd ../..
+tar cfz openssl-$openssl_version-precise-64.tar.gz -C /home/ubuntu/opt openssl-$openssl_version
+tar cfz curl-$curl_version-gssapi-precise-64.tar.gz -C /home/ubuntu/opt curl-$curl_version-gssapi
