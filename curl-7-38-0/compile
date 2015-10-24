@@ -31,20 +31,23 @@ wget_once_to() {
   fi
 }
 
-curl_version=7.19.0
+curl_version=7.38.0
 
 rm -rf build
 mkdir build
 cd build
 (cd .. && wget_once http://curl.haxx.se/download/archeology/curl-$curl_version.tar.gz)
 
+sudo apt-get install libgnutls-dev libkrb5-dev
+
 tar xfz ../curl-$curl_version.tar.gz
 cd curl-$curl_version
-patch -p1 <../../curl-7.19.0/debian/patches/curl-7.19.0-sslv2-c66b0b32fba-modified.patch
-./configure --prefix=/home/ubuntu/opt/curl-$curl_version
+./configure --prefix=/home/ubuntu/opt/curl-$curl_version-gssapi \
+  --without-ssl --without-nss --with-gssapi \
+  --with-gnutls
 make
 # building in vagrant, installing to /home/ubuntu
 sudo make install
 
 cd ../..
-tar cfz curl-$curl_version-precise-64.tar.gz -C /home/ubuntu/opt curl-$curl_version
+tar cfz curl-$curl_version-gssapi-precise-64.tar.gz -C /home/ubuntu/opt curl-$curl_version-gssapi

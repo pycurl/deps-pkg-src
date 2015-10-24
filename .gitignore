@@ -1,3 +1,5 @@
 /.vagrant
 /*/build
 /*/*.tar.gz
+/*.tar.gz
+/bin

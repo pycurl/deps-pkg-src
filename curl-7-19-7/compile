@@ -49,11 +49,10 @@ cd ..
 
 (cd .. && wget_once http://curl.haxx.se/download/archeology/curl-$curl_version.tar.gz)
 
-sudo apt-get install libssl-dev libkrb5-dev
+sudo apt-get install libkrb5-dev
 
 tar xfz ../curl-$curl_version.tar.gz
 cd curl-$curl_version
-./configure --help
 ./configure --prefix=/home/ubuntu/opt/curl-$curl_version-gssapi \
   --without-gnults --without-nss --with-gssapi \
   --with-ssl=/home/ubuntu/opt/openssl-$openssl_version

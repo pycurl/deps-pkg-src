@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -ex
+
+mkdir -p dist
+
+rsync --exclude dist *-precise-*.tar.gz c*/*-precise-*.tar.gz dist
