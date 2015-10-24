@@ -32,6 +32,7 @@ wget_once_to() {
 }
 
 curl_version=7.19.0
+DEST_HOME=/home/travis
 
 rm -rf build
 mkdir build
@@ -41,10 +42,10 @@ cd build
 tar xfz ../curl-$curl_version.tar.gz
 cd curl-$curl_version
 patch -p1 <../../curl-7.19.0/debian/patches/curl-7.19.0-sslv2-c66b0b32fba-modified.patch
-./configure --prefix=/home/ubuntu/opt/curl-$curl_version
+./configure --prefix=$DEST_HOME/opt/curl-$curl_version
 make
-# building in vagrant, installing to /home/ubuntu
+# building in vagrant, installing to $DEST_HOME
 sudo make install
 
 cd ../..
-tar cfz curl-$curl_version-precise-64.tar.gz -C /home/ubuntu/opt curl-$curl_version
+tar cfz curl-$curl_version-precise-64.tar.gz -C $DEST_HOME/opt curl-$curl_version
