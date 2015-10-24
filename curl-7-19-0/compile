@@ -1,0 +1,47 @@
+#!/bin/sh
+
+set -ex
+
+wget_once() {
+  url="$1"
+  if ! test -f `basename "$url"`; then
+    wget -O `basename "$url"`.part "$url"
+    rv=$?
+    if test $rv = 0; then
+      mv `basename "$url"`.part `basename "$url"`
+    else
+      rm -f `basename "$url"`.part
+      return $rv
+    fi
+  fi
+}
+
+wget_once_to() {
+  url="$1"
+  dest="$2"
+  if ! test -f "$dest"; then
+    wget -O "$dest".part "$url"
+    rv=$?
+    if test $rv = 0; then
+      mv "$dest".part "$dest"
+    else
+      rm -f "$dest".part
+      return $rv
+    fi
+  fi
+}
+
+curl_version=7.19.0
+
+rm -rf build
+mkdir build
+cd build
+(cd .. && wget_once http://curl.haxx.se/download/archeology/curl-$curl_version.tar.gz)
+
+tar xfz ../curl-$curl_version.tar.gz
+cd curl-$curl_version
+patch -p1 <../../curl-7.19.0/debian/patches/curl-7.19.0-sslv2-c66b0b32fba-modified.patch
+./configure --prefix=/home/ubuntu/opt/curl-$curl_version
+make
+# building in vagrant, installing to /home/ubuntu
+sudo make install
