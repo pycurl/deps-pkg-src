@@ -1,0 +1,28 @@
+diff -ur ../curl-7.43.0.orig/configure ./configure
+--- ../curl-7.43.0.orig/configure	2015-06-15 21:31:47.000000000 +0000
++++ ./configure	2015-10-24 01:19:57.227644234 +0000
+@@ -23831,8 +23831,8 @@
+ 
+         check=`nss-config --version 2>/dev/null`
+         if test -n "$check"; then
+-          addlib=`nss-config --libs`
+-          addcflags=`nss-config --cflags`
++          addlib=`nss-config --libs && nspr-config --libs`
++          addcflags=`nss-config --cflags && nspr-config --libs`
+           version=`nss-config --version`
+           nssprefix=`nss-config --prefix`
+         else
+diff -ur ../curl-7.43.0.orig/configure.ac ./configure.ac
+--- ../curl-7.43.0.orig/configure.ac	2015-06-11 17:50:43.000000000 +0000
++++ ./configure.ac	2015-10-24 01:20:11.815835198 +0000
+@@ -2109,8 +2109,8 @@
+ 
+         check=`nss-config --version 2>/dev/null`
+         if test -n "$check"; then
+-          addlib=`nss-config --libs`
+-          addcflags=`nss-config --cflags`
++          addlib=`nss-config --libs && nspr-config --libs`
++          addcflags=`nss-config --cflags && nspr-config --cflags`
+           version=`nss-config --version`
+           nssprefix=`nss-config --prefix`
+         else
