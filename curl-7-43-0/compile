@@ -49,18 +49,19 @@ do_build() {
   tar xfz ../curl-$curl_version.tar.gz
   cd curl-$curl_version
   patch -p1 <../../curl-7.43.0-nss-patch
-  ./configure --prefix=$DEST_HOME/opt/curl-$curl_version-$suffix-gssapi \
-    --with-gssapi $opts
+  ./configure --prefix=$DEST_HOME/opt/curl-$curl_version-$suffix \
+    $opts
   make
   # building in vagrant, installing to $DEST_HOME
   sudo make install
 
   cd ../..
-  tar cfz curl-$curl_version-$suffix-gssapi-precise-64.tar.gz -C $DEST_HOME/opt curl-$curl_version-$suffix-gssapi
+  tar cfz curl-$curl_version-$suffix-precise-64.tar.gz \
+    -C $DEST_HOME/opt curl-$curl_version-$suffix
   cd build
 }
 
-#do_build openssl "--without-gnutls --without-nss --with-ssl"
-#do_build gnutls "--without-ssl --without-nss --with-gnutls"
-do_build nss "--without-ssl --without-gnutls --with-nss"
-do_build none "--without-ssl --without-gnutls --without-nss"
+do_build openssl-gssapi "--without-gnutls --without-nss --with-ssl --with-gssapi"
+do_build gnutls-gssapi "--without-ssl --without-nss --with-gnutls --with-gssapi"
+do_build nss-gssapi "--without-ssl --without-gnutls --with-nss --with-gssapi"
+do_build none "--without-ssl --without-gnutls --without-nss --without-gssapi"
