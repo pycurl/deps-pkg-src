@@ -7,8 +7,8 @@ diff -ur ../curl-7.43.0.orig/configure ./configure
          if test -n "$check"; then
 -          addlib=`nss-config --libs`
 -          addcflags=`nss-config --cflags`
-+          addlib=`nss-config --libs && nspr-config --libs`
-+          addcflags=`nss-config --cflags && nspr-config --cflags`
++          addlib=`echo $(nss-config --libs && nspr-config --libs)`
++          addcflags=`echo $(nss-config --cflags && nspr-config --cflags)`
            version=`nss-config --version`
            nssprefix=`nss-config --prefix`
          else
@@ -21,8 +21,8 @@ diff -ur ../curl-7.43.0.orig/configure.ac ./configure.ac
          if test -n "$check"; then
 -          addlib=`nss-config --libs`
 -          addcflags=`nss-config --cflags`
-+          addlib=`nss-config --libs && nspr-config --libs`
-+          addcflags=`nss-config --cflags && nspr-config --cflags`
++          addlib=`echo $(nss-config --libs && nspr-config --libs)`
++          addcflags=`echo $(nss-config --cflags && nspr-config --cflags)`
            version=`nss-config --version`
            nssprefix=`nss-config --prefix`
          else
