@@ -33,6 +33,7 @@ wget_once_to() {
 
 curl_version=7.43.0
 DEST_HOME=/home/travis
+libressl_version=2.2.0
 
 rm -rf build
 mkdir build
@@ -61,7 +62,9 @@ do_build() {
   cd build
 }
 
-do_build openssl-gssapi "--without-gnutls --without-nss --with-ssl --with-gssapi"
-do_build gnutls-gssapi "--without-ssl --without-nss --with-gnutls --with-gssapi"
-do_build nss-gssapi "--without-ssl --without-gnutls --with-nss --with-gssapi"
-do_build none "--without-ssl --without-gnutls --without-nss --without-gssapi"
+#do_build openssl-gssapi "--without-gnutls --without-nss --with-ssl --with-gssapi"
+#do_build gnutls-gssapi "--without-ssl --without-nss --with-gnutls --with-gssapi"
+#do_build nss-gssapi "--without-ssl --without-gnutls --with-nss --with-gssapi"
+#do_build none "--without-ssl --without-gnutls --without-nss --without-gssapi"
+
+do_build libressl-gssapi "--without-gnutls --without-nss --with-ssl=$DEST_HOME/opt/libressl-$libressl_version --with-gssapi"

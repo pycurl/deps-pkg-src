@@ -37,7 +37,7 @@ DEST_HOME=/home/travis
 rm -rf build
 mkdir build
 cd build
-(cd .. && wget_once http://curl.haxx.se/download/archeology/curl-$curl_version.tar.gz)
+(cd .. && wget_once http://curl.haxx.se/download/curl-$curl_version.tar.gz)
 
 sudo apt-get install libgnutls-dev libkrb5-dev
 
