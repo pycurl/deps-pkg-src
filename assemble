@@ -4,4 +4,4 @@ set -ex
 
 mkdir -p dist
 
-cp *-precise-*.tar.gz [cl]*/*-precise-*.tar.gz dist
+cp *-precise-*.tar.gz [clp]*/*-precise-*.tar.gz dist
