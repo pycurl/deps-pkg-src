@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+cd dist
+
+for file in *.tar.gz; do
+  echo $file
+  zcat $file |xz >`echo $file |sed -e s/gz\$/xz/`
+done
