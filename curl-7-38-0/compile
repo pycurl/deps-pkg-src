@@ -43,7 +43,7 @@ sudo apt-get install libgnutls-dev libkrb5-dev
 
 tar xfz ../curl-$curl_version.tar.gz
 cd curl-$curl_version
-./configure --prefix=$DEST_HOME/opt/curl-$curl_version-gssapi \
+./configure --prefix=$DEST_HOME/opt/curl-$curl_version-gnutls-gssapi \
   --without-ssl --without-nss --with-gssapi \
   --with-gnutls
 make
@@ -51,4 +51,4 @@ make
 sudo make install
 
 cd ../..
-tar cfz curl-$curl_version-gssapi-precise-64.tar.gz -C $DEST_HOME/opt curl-$curl_version-gssapi
+tar cfz curl-$curl_version-gnutls-gssapi-precise-64.tar.gz -C $DEST_HOME/opt curl-$curl_version-gnutls-gssapi

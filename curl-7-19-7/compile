@@ -54,7 +54,7 @@ sudo apt-get install libkrb5-dev
 
 tar xfz ../curl-$curl_version.tar.gz
 cd curl-$curl_version
-./configure --prefix=$DEST_HOME/opt/curl-$curl_version-gssapi \
+./configure --prefix=$DEST_HOME/opt/curl-$curl_version-openssl-gssapi \
   --without-gnults --without-nss --with-gssapi \
   --with-ssl=$DEST_HOME/opt/openssl-$openssl_version
 make
@@ -63,4 +63,4 @@ sudo make install
 
 cd ../..
 tar cfz openssl-$openssl_version-precise-64.tar.gz -C $DEST_HOME/opt openssl-$openssl_version
-tar cfz curl-$curl_version-gssapi-precise-64.tar.gz -C $DEST_HOME/opt curl-$curl_version-gssapi
+tar cfz curl-$curl_version-openssl-gssapi-precise-64.tar.gz -C $DEST_HOME/opt curl-$curl_version-openssl-gssapi
