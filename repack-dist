@@ -5,6 +5,9 @@ set -e
 cd dist
 
 for file in *.tar.gz; do
-  echo $file
-  zcat $file |xz >`echo $file |sed -e s/gz\$/xz/`
+  dest=`echo $file |sed -e s/gz\$/xz/`
+  if ! test -f $dest; then
+    echo $file
+    zcat $file |xz >$dest
+  fi
 done
