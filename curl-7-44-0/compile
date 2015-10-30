@@ -31,7 +31,7 @@ wget_once_to() {
   fi
 }
 
-curl_version=7.43.0
+curl_version=7.44.0
 DEST_HOME=/home/travis
 libressl_version=2.2.0
 
@@ -49,7 +49,7 @@ do_build() {
   rm -rf curl-$curl_version
   tar xfz ../curl-$curl_version.tar.gz
   cd curl-$curl_version
-  patch -p1 <../../curl-7.43.0-nss-patch
+  patch -p1 <../../../patches/curl-7.43.0-nss-patch
   ./configure --prefix=$DEST_HOME/opt/curl-$curl_version-$suffix \
     $opts
   make
@@ -62,14 +62,6 @@ do_build() {
   cd build
 }
 
-do_build openssl-gssapi "--without-gnutls --without-nss --with-ssl --with-gssapi"
 do_build gnutls-gssapi "--without-ssl --without-nss --with-gnutls --with-gssapi"
-do_build nss-gssapi "--without-ssl --without-gnutls --with-nss --with-gssapi"
-do_build none "--without-ssl --without-gnutls --without-nss --without-gssapi"
-do_build libressl-gssapi "--without-gnutls --without-nss --with-ssl=$DEST_HOME/opt/libressl-$libressl_version --with-gssapi"
 
-ldd $DEST_HOME/opt/curl-$curl_version-openssl-gssapi/lib/libcurl.so |grep libssl
 ldd $DEST_HOME/opt/curl-$curl_version-gnutls-gssapi/lib/libcurl.so |grep libgnutls
-ldd $DEST_HOME/opt/curl-$curl_version-nss-gssapi/lib/libcurl.so |grep libnss
-! ldd $DEST_HOME/opt/curl-$curl_version-none/lib/libcurl.so |egrep 'lib(ssl|gnutls|nss)'
-ldd $DEST_HOME/opt/curl-$curl_version-libressl-gssapi/lib/libcurl.so |grep libssl
