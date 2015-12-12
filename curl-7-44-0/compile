@@ -40,7 +40,7 @@ mkdir build
 cd build
 (cd .. && wget_once http://curl.haxx.se/download/curl-$curl_version.tar.gz)
 
-sudo apt-get install libssl-dev libgnutls-dev libnss3-dev libkrb5-dev
+sudo apt-get install libssl-dev libgnutls-dev libnss3-dev libkrb5-dev libssh2-1-dev
 
 do_build() {
   suffix=$1
@@ -62,6 +62,6 @@ do_build() {
   cd build
 }
 
-do_build gnutls-gssapi "--without-ssl --without-nss --with-gnutls --with-gssapi"
+do_build gnutls-gssapi-libssh2 "--without-ssl --without-nss --with-gnutls --with-gssapi --with-libssh2"
 
 ldd $DEST_HOME/opt/curl-$curl_version-gnutls-gssapi/lib/libcurl.so |grep libgnutls
