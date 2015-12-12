@@ -1,0 +1,75 @@
+#!/bin/sh
+
+set -ex
+
+wget_once() {
+  url="$1"
+  if ! test -f `basename "$url"`; then
+    wget -O `basename "$url"`.part "$url"
+    rv=$?
+    if test $rv = 0; then
+      mv `basename "$url"`.part `basename "$url"`
+    else
+      rm -f `basename "$url"`.part
+      return $rv
+    fi
+  fi
+}
+
+wget_once_to() {
+  url="$1"
+  dest="$2"
+  if ! test -f "$dest"; then
+    wget -O "$dest".part "$url"
+    rv=$?
+    if test $rv = 0; then
+      mv "$dest".part "$dest"
+    else
+      rm -f "$dest".part
+      return $rv
+    fi
+  fi
+}
+
+curl_version=7.46.0
+DEST_HOME=/home/travis
+libressl_version=2.2.0
+
+rm -rf build
+mkdir build
+cd build
+(cd .. && wget_once http://curl.haxx.se/download/curl-$curl_version.tar.gz)
+
+sudo apt-get install libssl-dev libgnutls-dev libnss3-dev libkrb5-dev libssh2-1-dev
+
+do_build() {
+  suffix=$1
+  opts="$2"
+  
+  rm -rf curl-$curl_version
+  tar xfz ../curl-$curl_version.tar.gz
+  cd curl-$curl_version
+  patch -p1 <../../../patches/curl-7.43.0-nss-patch
+  ./configure --prefix=$DEST_HOME/opt/curl-$curl_version-$suffix \
+    $opts
+  make
+  # building in vagrant, installing to $DEST_HOME
+  sudo make install
+
+  cd ../..
+  tar cfz curl-$curl_version-$suffix-precise-64.tar.gz \
+    -C $DEST_HOME/opt curl-$curl_version-$suffix
+  cd build
+}
+
+do_build openssl-gssapi-libssh2 "--without-gnutls --without-nss --with-ssl --with-gssapi --with-libssh2"
+do_build gnutls-gssapi-libssh2 "--without-ssl --without-nss --with-gnutls --with-gssapi --with-libssh2"
+do_build nss-gssapi-libssh2 "--without-ssl --without-gnutls --with-nss --with-gssapi --with-libssh2"
+do_build none "--without-ssl --without-gnutls --without-nss --without-gssapi"
+do_build libressl-gssapi-libssh2 "--without-gnutls --without-nss --with-ssl=$DEST_HOME/opt/libressl-$libressl_version --with-gssapi --with-libssh2"
+
+ldd $DEST_HOME/opt/curl-$curl_version-openssl-gssapi/lib/libcurl.so |grep libssl
+#ldd $DEST_HOME/opt/curl-$curl_version-gnutls-gssapi/lib/libcurl.so |grep libgnutls
+ldd $DEST_HOME/opt/curl-$curl_version-nss-gssapi/lib/libcurl.so |grep libnss
+! ldd $DEST_HOME/opt/curl-$curl_version-none/lib/libcurl.so |egrep 'lib(ssl|gnutls|nss)'
+ldd $DEST_HOME/opt/curl-$curl_version-libressl-gssapi/lib/libcurl.so |grep libssl
