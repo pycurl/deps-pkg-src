@@ -68,8 +68,8 @@ do_build nss-gssapi-libssh2 "--without-ssl --without-gnutls --with-nss --with-gs
 do_build none "--without-ssl --without-gnutls --without-nss --without-gssapi"
 do_build libressl-gssapi-libssh2 "--without-gnutls --without-nss --with-ssl=$DEST_HOME/opt/libressl-$libressl_version --with-gssapi --with-libssh2"
 
-ldd $DEST_HOME/opt/curl-$curl_version-openssl-gssapi/lib/libcurl.so |grep libssl
-#ldd $DEST_HOME/opt/curl-$curl_version-gnutls-gssapi/lib/libcurl.so |grep libgnutls
-ldd $DEST_HOME/opt/curl-$curl_version-nss-gssapi/lib/libcurl.so |grep libnss
+ldd $DEST_HOME/opt/curl-$curl_version-openssl-gssapi-libssh2/lib/libcurl.so |grep libssl
+#ldd $DEST_HOME/opt/curl-$curl_version-gnutls-gssapi-libssh2/lib/libcurl.so |grep libgnutls
+ldd $DEST_HOME/opt/curl-$curl_version-nss-gssapi-libssh2/lib/libcurl.so |grep libnss
 ! ldd $DEST_HOME/opt/curl-$curl_version-none/lib/libcurl.so |egrep 'lib(ssl|gnutls|nss)'
-ldd $DEST_HOME/opt/curl-$curl_version-libressl-gssapi/lib/libcurl.so |grep libssl
+ldd $DEST_HOME/opt/curl-$curl_version-libressl-gssapi-libssh2/lib/libcurl.so |grep libssl
