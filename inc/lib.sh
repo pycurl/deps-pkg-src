@@ -1,3 +1,5 @@
+DEST_HOME=/home/travis
+
 wget_once() {
   url="$1"
   if ! test -f `basename "$url"`; then

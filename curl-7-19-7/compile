@@ -6,7 +6,6 @@ set -ex
 
 openssl_version=1.0.1e
 curl_version=7.19.7
-DEST_HOME=/home/travis
 
 rm -rf build
 mkdir build

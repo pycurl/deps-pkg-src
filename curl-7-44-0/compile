@@ -5,7 +5,6 @@ set -ex
 . ../inc/lib.sh
 
 curl_version=7.44.0
-DEST_HOME=/home/travis
 libressl_version=2.2.0
 
 rm -rf build
