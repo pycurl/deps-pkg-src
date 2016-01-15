@@ -16,8 +16,9 @@ sudo apt-get install libgnutls-dev libkrb5-dev
 tar xfz ../curl-$curl_version.tar.gz
 cd curl-$curl_version
 ./configure --prefix=$DEST_HOME/opt/curl-$curl_version-gnutls-gssapi \
+  --with-nghttp2=$DEST_HOME/local \
   --without-ssl --without-nss --with-gssapi \
-  --with-gnutls --with-nghttp2
+  --with-gnutls
 make
 # building in vagrant, installing to $DEST_HOME
 sudo make install

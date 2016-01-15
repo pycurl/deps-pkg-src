@@ -23,7 +23,7 @@ do_build() {
   cd curl-$curl_version
   patch -p1 <../../../patches/curl-7.43.0-nss-patch
   ./configure --prefix=$DEST_HOME/opt/curl-$curl_version-$suffix \
-    --with-nghttp2 $opts
+    --with-nghttp2=$DEST_HOME/local $opts
   make
   # building in vagrant, installing to $DEST_HOME
   sudo make install
