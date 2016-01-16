@@ -37,3 +37,39 @@ all_deps() {
   echo `gnutls_deps` \
     libssl-dev libnss3-dev libkrb5-dev libssh2-1-dev
 }
+
+prep_build_and_cd() {
+  rm -rf build
+  mkdir build
+  cd build
+}
+
+fetch_curl() {
+  (cd .. && wget_once http://curl.haxx.se/download/curl-$curl_version.tar.gz)
+}
+
+build_curl_7_43_0_or_higher() {
+  suffix=$1
+  opts="$2"
+  
+  rm -rf curl-$curl_version
+  tar xfz ../curl-$curl_version.tar.gz
+  cd curl-$curl_version
+  patch -p1 <../../../patches/curl-7.43.0-nss-patch
+  ./configure --prefix=$DEST_HOME/opt/curl-$curl_version-$suffix \
+    --with-nghttp2=$DEST_HOME/local $opts
+  make
+  # building in vagrant, installing to $DEST_HOME
+  sudo make install
+
+  cd ../..
+  tar cfz curl-$curl_version-$suffix-precise-64.tar.gz \
+    -C $DEST_HOME/opt curl-$curl_version-$suffix
+  cd build
+}
+
+setup_nghttp2_envvars() {
+  #export CPPFLAGS="$CPPFLAGS -I$DEST_HOME/local/include"
+  #export LDLAGS="$LDLAGS -L$DEST_HOME/local/lib"
+  :
+}

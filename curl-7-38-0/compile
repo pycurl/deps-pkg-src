@@ -6,12 +6,12 @@ set -ex
 
 curl_version=7.38.0
 
-rm -rf build
-mkdir build
-cd build
-(cd .. && wget_once http://curl.haxx.se/download/curl-$curl_version.tar.gz)
+prep_build_and_cd
+fetch_curl
 
 sudo apt-get install `gnutls_deps`
+
+setup_nghttp2_envvars
 
 tar xfz ../curl-$curl_version.tar.gz
 cd curl-$curl_version
