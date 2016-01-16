@@ -18,4 +18,4 @@ make
 sudo make install
 
 cd ../..
-tar cfz libressl-$libressl_version-precise-64.tar.gz -C $DEST_HOME/opt libressl-$libressl_version
+tar cfJ libressl-$libressl_version-precise-64.tar.xz -C $DEST_HOME/opt libressl-$libressl_version

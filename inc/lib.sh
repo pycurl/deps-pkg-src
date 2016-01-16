@@ -81,7 +81,7 @@ pack_curl() {
   if test -n "$nghttp2_version"; then
     pack_args="$pack_args nghttp2-$nghttp2_version"
   fi
-  tar cfz curl-$curl_version-$suffix-precise-64.tar.gz \
+  tar cfJ curl-$curl_version-$suffix-precise-64.tar.xz \
     -C $DEST_HOME/opt $pack_args
   cd build
 }

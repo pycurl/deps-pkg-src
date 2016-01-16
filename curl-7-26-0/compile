@@ -21,4 +21,4 @@ make
 sudo make install
 
 cd ../..
-tar cfz curl-$curl_version-gnutls-gssapi-precise-64.tar.gz -C $DEST_HOME/opt curl-$curl_version-gnutls-gssapi
+tar cfJ curl-$curl_version-gnutls-gssapi-precise-64.tar.xz -C $DEST_HOME/opt curl-$curl_version-gnutls-gssapi

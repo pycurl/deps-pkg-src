@@ -17,4 +17,4 @@ make
 sudo make install
 
 cd ../..
-tar cfz python-3.1-precise-64.tar.gz -C $DEST_HOME/opt python-3.1
+tar cfJ python-3.1-precise-64.tar.xz -C $DEST_HOME/opt python-3.1
