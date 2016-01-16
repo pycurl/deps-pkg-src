@@ -6,8 +6,8 @@ set -ex
 
 curl_version=7.38.0
 
-prep_build_and_cd
 fetch_curl
+prep_build_and_cd
 
 sudo apt-get install `gnutls_deps`
 

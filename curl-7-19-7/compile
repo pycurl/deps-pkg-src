@@ -7,9 +7,9 @@ set -ex
 openssl_version=1.0.1e
 curl_version=7.19.7
 
-rm -rf build
-mkdir build
-cd build
+fetch_old_curl
+
+prep_build_and_cd
 (cd .. && wget_once http://www.openssl.org/source/old/1.0.1/openssl-$openssl_version.tar.gz)
 
 tar xfz ../openssl-$openssl_version.tar.gz
@@ -19,8 +19,6 @@ make
 sudo make install
 
 cd ..
-
-(cd .. && wget_once http://curl.haxx.se/download/archeology/curl-$curl_version.tar.gz)
 
 sudo apt-get install libkrb5-dev
 

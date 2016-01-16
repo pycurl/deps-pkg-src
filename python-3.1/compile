@@ -6,9 +6,7 @@ set -ex
 
 python_version=3.1.5
 
-rm -rf build
-mkdir build
-cd build
+prep_build_and_cd
 
 (cd .. && wget_once https://www.python.org/ftp/python/$python_version/Python-$python_version.tgz)
 

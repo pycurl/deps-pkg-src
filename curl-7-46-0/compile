@@ -7,8 +7,8 @@ set -ex
 curl_version=7.46.0
 libressl_version=2.2.0
 
-prep_build_and_cd
 fetch_curl
+prep_build_and_cd
 
 sudo apt-get install `all_deps`
 

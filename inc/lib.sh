@@ -45,7 +45,11 @@ prep_build_and_cd() {
 }
 
 fetch_curl() {
-  (cd .. && wget_once http://curl.haxx.se/download/curl-$curl_version.tar.gz)
+  wget_once http://curl.haxx.se/download/curl-$curl_version.tar.gz
+}
+
+fetch_old_curl() {
+  wget_once http://curl.haxx.se/download/archeology/curl-$curl_version.tar.gz
 }
 
 build_curl_7_43_0_or_higher() {
