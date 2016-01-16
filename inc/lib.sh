@@ -75,6 +75,7 @@ build_curl_7_43_0_or_higher() {
 }
 
 pack_curl() {
+  suffix="$1"
   cd ..
   pack_args=curl-$curl_version-$suffix
   if test -n "$nghttp2_version"; then
