@@ -6,12 +6,16 @@ set -ex
 
 curl_version=7.44.0
 libressl_version=2.2.0
+nghttp2_version=1.6.0
 
 fetch_curl
+fetch_nghttp2
+
 prep_build_and_cd
 
 sudo apt-get install `all_deps`
 
+build_nghttp2
 setup_nghttp2_envvars
 
 build_curl_7_43_0_or_higher \

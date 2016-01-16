@@ -61,7 +61,7 @@ build_curl_7_43_0_or_higher() {
   cd curl-$curl_version
   patch -p1 <../../../patches/curl-7.43.0-nss-patch
   ./configure --prefix=$DEST_HOME/opt/curl-$curl_version-$suffix \
-    --with-nghttp2=$DEST_HOME/local $opts
+    --with-nghttp2=$DEST_HOME/opt/nghttp2-$nghttp2_version $opts
   make
   # building in vagrant, installing to $DEST_HOME
   sudo make install
@@ -76,4 +76,22 @@ setup_nghttp2_envvars() {
   #export CPPFLAGS="$CPPFLAGS -I$DEST_HOME/local/include"
   #export LDLAGS="$LDLAGS -L$DEST_HOME/local/lib"
   :
+}
+
+fetch_nghttp2() {
+  wget_once https://github.com/tatsuhiro-t/nghttp2/releases/download/v$nghttp2_version/nghttp2-$nghttp2_version.tar.xz
+}
+
+build_nghttp2() {
+  if test -e $DEST_HOME/opt/nghttp2-$nghttp2_version; then
+    echo Skipping build of nghttp2 $nghttp2_version
+    return
+  fi
+  
+  tar xf ../nghttp2-$nghttp2_version.tar.xz
+  cd nghttp2-$nghttp2_version
+  ./configure --prefix=$DEST_HOME/opt/nghttp2-$nghttp2_version
+  make
+  sudo make install
+  cd ..
 }
