@@ -60,15 +60,28 @@ build_curl_7_43_0_or_higher() {
   tar xfz ../curl-$curl_version.tar.gz
   cd curl-$curl_version
   patch -p1 <../../../patches/curl-7.43.0-nss-patch
+  if test -n "$nghttp2_version"; then
+    opts="--with-nghttp2=$DEST_HOME/opt/nghttp2-$nghttp2_version $opts"
+  fi
   ./configure --prefix=$DEST_HOME/opt/curl-$curl_version-$suffix \
-    --with-nghttp2=$DEST_HOME/opt/nghttp2-$nghttp2_version $opts
+    $opts
   make
   # building in vagrant, installing to $DEST_HOME
   sudo make install
 
-  cd ../..
+  cd ..
+  
+  pack_curl $suffix
+}
+
+pack_curl() {
+  cd ..
+  pack_args=curl-$curl_version-$suffix
+  if test -n "$nghttp2_version"; then
+    pack_args="$pack_args nghttp2-$nghttp2_version"
+  fi
   tar cfz curl-$curl_version-$suffix-precise-64.tar.gz \
-    -C $DEST_HOME/opt curl-$curl_version-$suffix
+    -C $DEST_HOME/opt $pack_args
   cd build
 }
 

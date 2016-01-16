@@ -27,5 +27,6 @@ make
 # building in vagrant, installing to $DEST_HOME
 sudo make install
 
-cd ../..
-tar cfz curl-$curl_version-gnutls-gssapi-precise-64.tar.gz -C $DEST_HOME/opt curl-$curl_version-gnutls-gssapi
+cd ..
+
+pack_curl gnutls-gssapi
