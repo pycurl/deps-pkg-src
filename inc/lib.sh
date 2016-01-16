@@ -28,3 +28,12 @@ wget_once_to() {
     fi
   fi
 }
+
+gnutls_deps() {
+  echo libgnutls-dev libkrb5-dev
+}
+
+all_deps() {
+  echo `gnutls_deps` \
+    libssl-dev libnss3-dev libkrb5-dev libssh2-1-dev
+}

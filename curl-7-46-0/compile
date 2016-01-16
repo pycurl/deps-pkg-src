@@ -12,7 +12,7 @@ mkdir build
 cd build
 (cd .. && wget_once http://curl.haxx.se/download/curl-$curl_version.tar.gz)
 
-sudo apt-get install libssl-dev libgnutls-dev libnss3-dev libkrb5-dev libssh2-1-dev
+sudo apt-get install `all_deps`
 
 do_build() {
   suffix=$1

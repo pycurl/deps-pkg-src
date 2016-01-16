@@ -11,7 +11,7 @@ mkdir build
 cd build
 (cd .. && wget_once http://curl.haxx.se/download/curl-$curl_version.tar.gz)
 
-sudo apt-get install libgnutls-dev libkrb5-dev
+sudo apt-get install `gnutls_deps`
 
 tar xfz ../curl-$curl_version.tar.gz
 cd curl-$curl_version
