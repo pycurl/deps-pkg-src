@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -ex
+
+. ../inc/lib.sh
+
+openssl_version=1.0.2o
+
+prep_build_and_cd
+
+(cd .. && wget_once https://www.openssl.org/source/openssl-$openssl_version.tar.gz)
+
+tar xfz ../openssl-$openssl_version.tar.gz
+cd openssl-$openssl_version
+./config --prefix=$DEST_HOME/opt/openssl-$openssl_version --openssldir=$DEST_HOME/opt/openssl-$openssl_version/openssl shared
+make
+sudo make install
+
+cd ../..
+tar cfJ openssl-$openssl_version-trusty-64.tar.xz -C $DEST_HOME/opt openssl-$openssl_version

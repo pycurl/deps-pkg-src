@@ -4,8 +4,7 @@ set -ex
 
 . ../inc/lib.sh
 
-libressl_version=2.2.0
-curl_version=7.19.7
+libressl_version=2.7.3
 
 prep_build_and_cd
 
@@ -18,4 +17,4 @@ make
 sudo make install
 
 cd ../..
-tar cfJ libressl-$libressl_version-precise-64.tar.xz -C $DEST_HOME/opt libressl-$libressl_version
+tar cfJ libressl-$libressl_version-$DISTRO-64.tar.xz -C $DEST_HOME/opt libressl-$libressl_version

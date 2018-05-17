@@ -22,5 +22,5 @@ make
 sudo make install
 
 cd ../..
-tar cfJ curl-$curl_version-openssl-gssapi-precise-64.tar.xz \
+tar cfJ curl-$curl_version-openssl-gssapi-$DISTRO-64.tar.xz \
   -C $DEST_HOME/opt curl-$curl_version-openssl-gssapi

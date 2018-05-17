@@ -4,4 +4,4 @@ set -ex
 
 mkdir -p dist
 
-cp -p *-precise-*.tar.[gx]z [clp]*/*-precise-*.tar.xz dist
+cp -p *-trusty-*.tar.[gx]z [clop]*/*-trusty-*.tar.xz dist

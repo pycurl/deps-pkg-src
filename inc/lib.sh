@@ -1,4 +1,5 @@
 DEST_HOME=/home/travis
+DISTRO=trusty
 
 wget_once() {
   url="$1"
@@ -81,7 +82,13 @@ pack_curl() {
   if test -n "$nghttp2_version"; then
     pack_args="$pack_args nghttp2-$nghttp2_version"
   fi
-  tar cfJ curl-$curl_version-$suffix-precise-64.tar.xz \
+  if echo $suffix |grep -q openssl10; then
+    pack_args="$pack_args openssl-$openssl10_version"
+  fi
+  if echo $suffix |grep -q openssl11; then
+    pack_args="$pack_args openssl-$openssl11_version"
+  fi
+  tar cfJ curl-$curl_version-$suffix-$DISTRO-64.tar.xz \
     -C $DEST_HOME/opt $pack_args
   cd build
 }
