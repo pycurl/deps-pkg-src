@@ -101,14 +101,16 @@ pack_curl() {
   if test -n "$nghttp2_version"; then
     pack_args="$pack_args nghttp2-$nghttp2_version"
   fi
-  if echo $suffix |grep -q openssl10; then
-    pack_args="$pack_args openssl-$openssl10_version"
-  fi
-  if echo $suffix |grep -q openssl11; then
-    pack_args="$pack_args openssl-$openssl11_version"
-  fi
-  if echo $suffix |grep -q libressl; then
-    pack_args="$pack_args libressl-$libressl_version"
+  if false; then
+    if echo $suffix |grep -q openssl10; then
+      pack_args="$pack_args openssl-$openssl10_version"
+    fi
+    if echo $suffix |grep -q openssl11; then
+      pack_args="$pack_args openssl-$openssl11_version"
+    fi
+    if echo $suffix |grep -q libressl; then
+      pack_args="$pack_args libressl-$libressl_version"
+    fi
   fi
   tar cfJ curl-$curl_version-$suffix-$DISTRO-64.tar.xz \
     -C $DEST_HOME/opt $pack_args
