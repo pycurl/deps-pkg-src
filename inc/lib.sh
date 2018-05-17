@@ -53,9 +53,28 @@ fetch_old_curl() {
   wget_once http://curl.haxx.se/download/archeology/curl-$curl_version.tar.gz
 }
 
+validate_dependency_dirs() {
+  opts="$1"
+  
+  cmd=`cat <<'CMD'
+    for (split /\s+/, <>) {
+      if (m/^(--with-.*)=(.*)/) {
+        if (! -e $2) {
+          print "Missing path $2 given for $1\n";
+          exit(2);
+        }
+      }
+    }
+CMD`
+  echo "$opts" |perl -e "$cmd"
+}
+
 build_curl_7_43_0_or_higher() {
   suffix=$1
   opts="$2"
+  if ! validate_dependency_dirs "$opts"; then
+    return 1
+  fi
   
   rm -rf curl-$curl_version
   tar xfz ../curl-$curl_version.tar.gz
