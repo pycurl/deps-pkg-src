@@ -7,4 +7,4 @@ sudo apt-get install vsftpd realpath
 rm -rf bin
 mkdir bin
 cp /usr/bin/realpath /usr/sbin/vsftpd bin
-tar cfz bin-trusty-64.tar.gz bin
+tar cfJ bin-trusty-64.tar.xz bin
