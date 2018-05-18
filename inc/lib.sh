@@ -76,10 +76,22 @@ build_curl_7_43_0_or_higher() {
     return 1
   fi
   
-  rm -rf curl-$curl_version
-  tar xfz ../curl-$curl_version.tar.gz
-  cd curl-$curl_version
+  if echo "$curl_version" |grep -q dev; then
+    sudo apt-get install -y autoconf libtool
+    rsync -a ../curl . --exclude .git
+    cd curl
+  else
+    rm -rf curl-$curl_version
+    tar xfz ../curl-$curl_version.tar.gz
+    cd curl-$curl_version
+  fi
+  
+  if echo "$curl_version" |grep -q dev; then
+    ./buildconf
+  fi
+  
   patch -p1 <../../../patches/curl-7.43.0-nss-patch
+  
   if test -n "$nghttp2_version"; then
     opts="--with-nghttp2=$DEST_HOME/opt/nghttp2-$nghttp2_version $opts"
   fi
