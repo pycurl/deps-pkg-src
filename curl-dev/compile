@@ -1,0 +1,34 @@
+#!/bin/sh
+
+set -ex
+
+. ../inc/lib.sh
+
+curl_version=dev
+openssl11_version=1.1.0h
+openssl10_version=1.0.2o
+libressl_version=2.7.3
+nghttp2_version=1.32.0
+
+sudo apt-get install -y git
+
+if test -d curl; then
+  (cd curl && git fetch origin && git reset --hard origin/master)
+else
+  git clone https://github.com/curl/curl
+fi
+
+fetch_nghttp2
+
+prep_build_and_cd
+
+sudo apt-get install `all_deps` pkg-config
+
+build_nghttp2
+setup_nghttp2_envvars
+
+build_curl_7_43_0_or_higher openssl11-gssapi-libssh2 "--without-gnutls --without-nss --with-gssapi --with-libssh2 --with-ssl=/home/travis/opt/openssl-$openssl11_version --with-nghttp2=/home/travis/opt/nghttp2-$nghttp2_version"
+build_curl_7_43_0_or_higher gnutls-gssapi-libssh2 "--without-ssl --without-nss --with-gnutls --with-gssapi --with-libssh2"
+build_curl_7_43_0_or_higher nss-gssapi-libssh2 "--without-ssl --without-gnutls --with-nss --with-gssapi --with-libssh2"
+build_curl_7_43_0_or_higher none "--without-ssl --without-gnutls --without-nss --without-gssapi"
+build_curl_7_43_0_or_higher libressl-gssapi-libssh2 "--without-gnutls --without-nss --with-ssl=$DEST_HOME/opt/libressl-$libressl_version --with-gssapi --with-libssh2"
