@@ -2,7 +2,8 @@
 
 set -ex
 
-. ../inc/lib.sh
+ROOT=$(realpath `dirname $0`/..)
+. $ROOT/inc/lib.sh
 
 curl_version=7.68.0
 openssl11_version=1.1.1d
@@ -15,7 +16,7 @@ fetch_nghttp2
 
 prep_build_and_cd
 
-sudo apt-get install `all_deps` pkg-config
+#sudo apt-get install `all_deps` pkg-config
 
 build_nghttp2
 setup_nghttp2_envvars

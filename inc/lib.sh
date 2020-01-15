@@ -31,7 +31,7 @@ wget_once_to() {
 }
 
 gnutls_deps() {
-  echo libgnutls-dev libkrb5-dev
+  echo libgnutls28-dev libkrb5-dev
 }
 
 all_deps() {
@@ -83,7 +83,7 @@ build_curl_7_43_0_or_higher() {
     cd curl
   else
     rm -rf curl-$curl_version
-    tar xfz ../curl-$curl_version.tar.gz
+    tar xfz $ROOT/curl-$curl_version.tar.gz
     cd curl-$curl_version
   fi
   
@@ -110,7 +110,6 @@ build_curl_7_43_0_or_higher() {
 
 pack_curl() {
   suffix="$1"
-  cd ..
   pack_args=curl-$curl_version-$suffix
   if test -n "$nghttp2_version"; then
     pack_args="$pack_args nghttp2-$nghttp2_version"
@@ -128,7 +127,6 @@ pack_curl() {
   fi
   tar cfJ curl-$curl_version-$suffix-$DISTRO-64.tar.xz \
     -C $DEST_HOME/opt $pack_args
-  cd build
 }
 
 setup_nghttp2_envvars() {
@@ -147,7 +145,7 @@ build_nghttp2() {
     return
   fi
   
-  tar xf ../nghttp2-$nghttp2_version.tar.xz
+  tar xf $ROOT/nghttp2-$nghttp2_version.tar.xz
   cd nghttp2-$nghttp2_version
   ./configure --prefix=$DEST_HOME/opt/nghttp2-$nghttp2_version
   make
