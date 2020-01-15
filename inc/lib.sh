@@ -1,5 +1,5 @@
 DEST_HOME=/home/travis
-DISTRO=trusty
+DISTRO=bionic
 
 wget_once() {
   url="$1"
@@ -96,6 +96,7 @@ build_curl_7_43_0_or_higher() {
     opts="--with-nghttp2=$DEST_HOME/opt/nghttp2-$nghttp2_version $opts"
   fi
   ./configure --prefix=$DEST_HOME/opt/curl-$curl_version-$suffix \
+    --enable-ftp \
     $opts
   make
   # building in vagrant, installing to $DEST_HOME

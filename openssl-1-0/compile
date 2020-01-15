@@ -4,7 +4,7 @@ set -ex
 
 . ../inc/lib.sh
 
-openssl_version=1.0.2o
+openssl_version=1.0.2u
 
 prep_build_and_cd
 
@@ -17,4 +17,4 @@ make
 sudo make install
 
 cd ../..
-tar cfJ openssl-$openssl_version-trusty-64.tar.xz -C $DEST_HOME/opt openssl-$openssl_version
+tar cfJ openssl-$openssl_version-bionic-64.tar.xz -C $DEST_HOME/opt openssl-$openssl_version

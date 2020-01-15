@@ -4,7 +4,7 @@ set -ex
 
 . ../inc/lib.sh
 
-libressl_version=2.7.3
+libressl_version=3.0.2
 
 prep_build_and_cd
 
