@@ -6,7 +6,7 @@ ROOT=$(realpath `dirname $0`/..)
 . $ROOT/inc/lib.sh
 
 curl_version=7.38.0
-nghttp2_version=1.40.0
+nghttp2_version=0.6.7
 
 fetch_curl
 fetch_nghttp2
