@@ -2,19 +2,24 @@
 
 set -ex
 
-. ../inc/lib.sh
+ROOT=$(realpath `dirname $0`/..)
+. $ROOT/inc/lib.sh
 
 libressl_version=3.0.2
 
 prep_build_and_cd
 
-(cd .. && wget_once http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$libressl_version.tar.gz)
+wget_once http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$libressl_version.tar.gz
 
-tar xfz ../libressl-$libressl_version.tar.gz
+tar xfz libressl-$libressl_version.tar.gz
 cd libressl-$libressl_version
 ./configure --prefix=$DEST_HOME/opt/libressl-$libressl_version
 make
 sudo make install
 
-cd ../..
+cd ..
+sudo rm -rf $DEST_HOME/opt/libressl-$libressl_version/share/man
 tar cfJ libressl-$libressl_version-$DISTRO-64.tar.xz -C $DEST_HOME/opt libressl-$libressl_version
+
+mkdir -p $ROOT/dist
+cp libressl-$libressl_version-$DISTRO-64.tar.xz $ROOT/dist

@@ -40,9 +40,10 @@ all_deps() {
 }
 
 prep_build_and_cd() {
-  rm -rf build
-  mkdir build
-  cd build
+  sudo rm -rf /deps
+  sudo mkdir /deps
+  cd /deps
+  sudo chown -R `id -u`:`id -g` .
 }
 
 fetch_curl() {
@@ -90,7 +91,7 @@ build_curl_7_43_0_or_higher() {
     ./buildconf
   fi
   
-  patch -p1 <../../../patches/curl-7.43.0-nss-patch
+  patch -p1 <$ROOT/patches/curl-7.43.0-nss-patch
   
   if test -n "$nghttp2_version"; then
     opts="--with-nghttp2=$DEST_HOME/opt/nghttp2-$nghttp2_version $opts"

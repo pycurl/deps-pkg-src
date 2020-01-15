@@ -2,19 +2,24 @@
 
 set -ex
 
-. ../inc/lib.sh
+ROOT=$(realpath `dirname $0`/..)
+. $ROOT/inc/lib.sh
 
 openssl_version=1.1.1d
 
 prep_build_and_cd
 
-(cd .. && wget_once https://www.openssl.org/source/openssl-$openssl_version.tar.gz)
+wget_once https://www.openssl.org/source/openssl-$openssl_version.tar.gz
 
-tar xfz ../openssl-$openssl_version.tar.gz
+tar xfz openssl-$openssl_version.tar.gz
 cd openssl-$openssl_version
 ./config --prefix=$DEST_HOME/opt/openssl-$openssl_version --openssldir=$DEST_HOME/opt/openssl-$openssl_version/openssl
 make
 sudo make install
 
-cd ../..
+cd ..
+sudo rm -rf $DEST_HOME/opt/openssl-$openssl_version/share/{doc,man}
 tar cfJ openssl-$openssl_version-bionic-64.tar.xz -C $DEST_HOME/opt openssl-$openssl_version
+
+mkdir -p $ROOT/dist
+cp openssl-$openssl_version-bionic-64.tar.xz $ROOT/dist
