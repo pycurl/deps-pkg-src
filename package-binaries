@@ -2,9 +2,9 @@
 
 set -ex
 
-sudo apt-get install vsftpd realpath
+sudo apt-get install vsftpd coreutils
 
 rm -rf bin
 mkdir bin
 cp /usr/bin/realpath /usr/sbin/vsftpd bin
-tar cfJ bin-bionic-64.tar.xz bin
+tar cfJ dist/bin-bionic-64.tar.xz bin
