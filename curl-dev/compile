@@ -2,7 +2,8 @@
 
 set -ex
 
-. ../inc/lib.sh
+ROOT=$(realpath `dirname $0`/..)
+. $ROOT/inc/lib.sh
 
 curl_version=dev
 openssl11_version=1.1.1d
@@ -10,19 +11,19 @@ openssl10_version=1.0.2u
 libressl_version=3.0.2
 nghttp2_version=1.40.0
 
-sudo apt-get install -y git
+#sudo apt-get install -y git
+
+fetch_nghttp2
+
+prep_build_and_cd
+
+#sudo apt-get install `all_deps` pkg-config
 
 if test -d curl; then
   (cd curl && git fetch origin && git reset --hard origin/master)
 else
   git clone https://github.com/curl/curl
 fi
-
-fetch_nghttp2
-
-prep_build_and_cd
-
-sudo apt-get install `all_deps` pkg-config
 
 build_nghttp2
 setup_nghttp2_envvars

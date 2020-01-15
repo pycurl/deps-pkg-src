@@ -78,8 +78,8 @@ build_curl_7_43_0_or_higher() {
   fi
   
   if echo "$curl_version" |grep -q dev; then
-    sudo apt-get install -y autoconf libtool
-    rsync -a ../curl . --exclude .git
+    #sudo apt-get install -y autoconf libtool
+    #rsync -a ../curl . --exclude .git
     cd curl
   else
     rm -rf curl-$curl_version

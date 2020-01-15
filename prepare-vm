@@ -14,4 +14,4 @@ fi
 
 apt-get update
 apt-get -y install make gcc coreutils libgnutls28-dev libkrb5-dev pkg-config \
-  libssl-dev libnss3-dev libssh2-1-dev
+  libssl-dev libnss3-dev libssh2-1-dev git autoconf libtool
