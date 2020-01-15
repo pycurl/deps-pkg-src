@@ -125,7 +125,7 @@ pack_curl() {
       pack_args="$pack_args libressl-$libressl_version"
     fi
   fi
-  tar cfJ curl-$curl_version-$suffix-$DISTRO-64.tar.xz \
+  tar cfJ $ROOT/dist/curl-$curl_version-$suffix-$DISTRO-64.tar.xz \
     -C $DEST_HOME/opt $pack_args
 }
 
